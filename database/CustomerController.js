@@ -10,7 +10,7 @@ class Customer{
     try{
     await client.connect();
 
-    let result = await db.collection('customers').insertOne({
+    let result = await collection.insertOne({
       cpf, name, telephone
     });
 
@@ -58,7 +58,7 @@ class Customer{
     try{
     await client.connect();
 
-    let result = await db.collection('customers').updateOne(
+    let result = await collection.updateOne(
       { cpf }, 
       { $set: {cpf, name, telephone} }
     );
@@ -76,7 +76,7 @@ class Customer{
     try{
       await client.connect();
 
-      let result = await db.collection('customers').deleteOne(cpf);
+      let result = await collection.deleteOne(cpf);
       console.log("1 document has been deleted!");
       return result;
       
