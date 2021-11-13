@@ -1,6 +1,7 @@
 const client = require('./database');
 
 const db = client.db('store');
+const collection = db.collection('customers');
 
 class Customer{
 
@@ -8,13 +9,12 @@ class Customer{
   async insert(cpf, name, telephone){
     try{
     await client.connect();
-    console.log("Database connected!");
 
     let result = await db.collection('customers').insertOne({
       cpf, name, telephone
     });
 
-    console.log("1 documento inserido!");
+    console.log("1 document has been inserted!");
     return result;
 
     }finally{
@@ -23,25 +23,29 @@ class Customer{
   }
 
   //read
-   async list(){
+   async list(skip, limit){
     try{
       await client.connect();
-      console.log("Database connected!");
 
-      let result = await db.collection('customers').find().toArray();
-      return result;
+      let count = await collection.find().count();
+      let result = await collection.find()
+      .skip(skip)
+      .limit(limit)
+      .toArray();
+
+      return({customers: result, count});
       
     }finally{
       client.close();
     }
   }
 
-  async listOne(){
+  //read one
+  async listOne(cpf){
     try{
       await client.connect();
-      console.log("Database connected!");
 
-      let result = await db.collection('customers').findOne(id);
+      let result = await collection.findOne({cpf});
       return result;
       
     }finally{
@@ -53,15 +57,13 @@ class Customer{
   async edit(cpf, name, telephone){
     try{
     await client.connect();
-    console.log("Database connected!");
 
-    // if structure for cpf name and telephone
+    let result = await db.collection('customers').updateOne(
+      { cpf }, 
+      { $set: {cpf, name, telephone} }
+    );
 
-    let result = await db.collection('customers').updateOne({
-      cpf, name, telephone
-    });
-
-    console.log("1 documento inserido!");
+    console.log("1 document has been updated!");
     return result;
 
     }finally{
@@ -73,9 +75,9 @@ class Customer{
   async delete(cpf){
     try{
       await client.connect();
-      console.log("Database connected!");
 
       let result = await db.collection('customers').deleteOne(cpf);
+      console.log("1 document has been deleted!");
       return result;
       
     }finally{

@@ -37,13 +37,36 @@ app.get("/", (req, res) => {
   let msg = req.flash("msg");
   msg = (msg == undefined || msg.length == 0) ? undefined : msg;
 
-  customer.list().then(customers => {
-    res.render("index", {customers, msg});
+  let pagination;
+  let limit = 8;
+  let skip = 0;
+
+  customer.list(skip, limit).then(data => {
+    pagination = (skip + limit >= data.count) ? false : true;
+
+    res.render("index", {customers: data.customers, msg, pagination});
 
   }).catch(err => {
     console.log(err);
   })
-  
+});
+
+app.get("/page/:num", (req, res) => {
+  const { num } = req.params;
+  let page = parseInt(num);
+  let pagination;
+
+  let limit = 8;
+  let skip = limit * (parseInt(num) -1);
+
+  customer.list(skip, limit).then(data => {
+    pagination = (skip + limit >= data.count) ? false : true;
+    
+    res.render("page", {customers: data.customers, pagination, page});
+
+  }).catch(err => {
+    console.log(err);
+  })
 });
 
 app.get("/customers/new", (req, res) => {
@@ -54,17 +77,29 @@ app.post("/customers/new", (req, res) => {
   const { document, name, telephone } = req.body;
 
   customer.insert(document, name, telephone).then(customer => {
-    req.flash("msg", "Usuário cadastrado com sucesso!");
+    req.flash("msg", "Customer successfully created!");
     res.redirect("/");
   });
 });
 
-app.get("/customers/edit/:id", (req, res) => {
-  const { id } = req.params.id;
-
-  customer.listOne(id).then(customer => {
+app.get("/customers/edit/:cpf", (req, res) => {
+  const { cpf } = req.params;
+  
+  customer.listOne(cpf).then(customer => {
     res.render("edit", {customer});
     
+  }).catch(err => {
+    console.log(err);
+  })
+});
+
+app.post("/customers/edit", (req, res) => {
+  const { cpf, name, telephone } = req.body;
+
+  customer.edit(cpf, name, telephone).then(result => {
+    req.flash("msg", "Customer successfully updated!");
+    res.redirect("/");
+
   }).catch(err => {
     console.log(err);
   })
@@ -75,10 +110,10 @@ app.post("/customers/delete", (req, res) => {
   let data = { cpf };
 
   customer.delete(data).then(result => {
-    req.flash("msg", "Usuário apagado com sucesso!");
+    req.flash("msg", "Customer successfully deleted!");
     res.redirect("/");
   })
-})
+});
 
 // server config
 app.listen(5002, (req, res) => {

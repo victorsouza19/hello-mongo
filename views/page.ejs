@@ -1,0 +1,67 @@
+<%- include("./partials/header") %>
+<body>
+  <%- include("./partials/navbar") %>
+  <div class="container">
+    <div class="text-top mt-5 mb-3 animate__animated animate__bounce">
+      <h3 class="m-4">A CRUD tool made by Node.js for MongoDB</h3>
+    </div>
+    <div class="card p-4 animate__animated animate__pulse">
+      <div class="card-title mb-4">
+        <h1>Customers</h1>
+        <a href="/customers/new" class="btn btn-success">New</a>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>CPF</th>
+            <th>Name</th>
+            <th>Telephone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% customers.forEach(customer => { %>
+            <tr>
+              <td class="action">
+                <a href="/customers/edit/<%= customer.cpf %>" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                <form action="/customers/delete" method="POST">
+                  <input type="hidden" name="cpf" value="<%= customer.cpf %>">
+                  <button type="submit" class="btn btn-success"><i class="fas fa-trash"></i></button>
+                </form>
+              </td>
+              <td><%= customer.cpf %></td>
+              <td><%= customer.name %></td>
+              <td><%= customer.telephone %></td>
+            </tr>
+            <% }) %>
+        </tbody>
+      </table>
+      <nav>
+        <ul class="pagination justify-content-center mt-4">
+
+        <% if (page <= 2 ){ %>
+          <li class="page-item">
+            <a class="page-link" href="/">Previous</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="/"><%= (page-1) %></a></li>
+
+        <% } else { %>
+          <li class="page-item">
+            <a class="page-link" href="/page/<%= (page-1) %>">Previous</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="/page/<%= (page-1) %>"><%= (page-1) %></a></li>
+
+        <% } %>
+          <li class="page-item active"><a class="page-link" href="/page/<%= page %>"><%= page %></a></li>
+        <% if (pagination == true){ %>
+          <li class="page-item"><a class="page-link" href="/page/<%= (page+1) %>"><%= (page+1) %></a></li>
+          <li class="page-item">
+            <a class="page-link" href="/page/<%= (page+1) %>">Next</a>
+          </li>
+        <% } %>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</body>
+<%- include("./partials/footer") %> 

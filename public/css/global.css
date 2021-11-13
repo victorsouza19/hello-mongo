@@ -1,12 +1,25 @@
+:root{
+  --green: #4DB33D;
+  --white: #FFF;
+}
+
+body{
+  background-image: url("/img/background-min.jpg");
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+}
+
 a{
   text-decoration: none;
 }
 
-body{
-  background-image: url("/img/background.jpg");
-  background-position: center;
-  background-size: cover;
-  height: 100vh;
+i{
+  width: 1rem;
+}
+
+thead{
+  border-bottom: 2px solid #4DB33D; 
 }
 
 .nav-title{
@@ -37,19 +50,25 @@ body{
   padding: 0.5rem;
 }
 
-i{
-  width: 1rem;
-}
-
 .action a{
   margin-right: 1rem;
-}
-
-thead{
-  border-bottom: 2px solid #4DB33D; 
 }
 
 .info{
   color: #4DB33D;
   margin-left: 0.5rem;
+}
+
+.page-item > a{
+  color: var(--green) !important;
+}
+
+.page-link:focus,.page-link:active {
+  box-shadow: none !important;
+}
+
+.active > a{
+  color: var(--white) !important;
+  background-color: var(--green) !important;
+  border: 1px solid var(--green) !important;
 }

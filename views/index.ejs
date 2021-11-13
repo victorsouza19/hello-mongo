@@ -2,45 +2,60 @@
 <body>
   <%- include("./partials/navbar") %>
   <div class="container">
-    <div class="text-top mt-5 mb-3">
+    <div class="text-top mt-5 mb-3 animate__animated animate__bounce">
       <h3 class="m-4">A CRUD tool made by Node.js for MongoDB</h3>
     </div>
-    <div class="card p-4">
+    <div class="card p-4 animate__animated animate__pulse">
       <div class="card-title mb-4">
         <h1>Customers</h1>
         <a href="/customers/new" class="btn btn-success">New</a>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Action</th>
-            <th>CPF</th>
-            <th>Name</th>
-            <th>Telephone</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% customers.forEach(customer => { %>
+      <div class="table-responsive">
+        <table class="w-100">
+          <thead>
             <tr>
-              <td class="action">
-                <a href="/edit/<%= customer.id %>" class="btn btn-success"><i class="fas fa-edit"></i></a>
-                <form action="/customers/delete" method="POST">
-                  <input type="hidden" name="cpf" value="<%= customer.cpf %>">
-                  <button type="submit" class="btn btn-success"><i class="fas fa-trash"></i></button>
-                </form>
-              </td>
-              <td><%= customer.cpf %></td>
-              <td><%= customer.name %></td>
-              <td><%= customer.telephone %></td>
+              <th>Action</th>
+              <th>CPF</th>
+              <th>Name</th>
+              <th>Telephone</th>
             </tr>
-            <% }) %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% customers.forEach(customer => { %>
+              <tr>
+                <td class="action">
+                  <a href="/customers/edit/<%= customer.cpf %>" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                  <form action="/customers/delete" method="POST">
+                    <input type="hidden" name="cpf" value="<%= customer.cpf %>">
+                    <button type="submit" class="btn btn-success"><i class="fas fa-trash"></i></button>
+                  </form>
+                </td>
+                <td><%= customer.cpf %></td>
+                <td><%= customer.name %></td>
+                <td><%= customer.telephone %></td>
+              </tr>
+              <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <% if (pagination == true){ %>
+      <nav>
+        <ul class="pagination justify-content-center mt-4">
+          <li class="page-item active"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="/page/2">2</a></li>
+          <li class="page-item">
+            <a class="page-link" href="/page/2">Next</a>
+          </li>
+        </ul>
+      </nav>
+      <% } %>
     </div>
     <% if(msg != undefined){ %> 
-    <div class="alert alert-success mt-4" role="alert">
+    <div class="alert alert-success mt-4 mb-4" role="alert">
       <%= msg %>
     </div>
+    <%}else {%>
+    <div class=" mb-4"><br></div>
     <%}%>
   </div>
 </body>
