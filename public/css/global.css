@@ -1,0 +1,55 @@
+a{
+  text-decoration: none;
+}
+
+body{
+  background-image: url("/img/background.jpg");
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+}
+
+.nav-title{
+  color: #4DB33D;
+  font-weight: 600;
+}
+
+.card-title{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-title a{
+  width: 20%;
+}
+
+.text-top h3{
+  font-size: 0.8rem;
+  text-align: center;
+  color: #797979;
+
+  font-weight: 400;
+}
+
+.action{
+  display: flex;
+  padding: 0.5rem;
+}
+
+i{
+  width: 1rem;
+}
+
+.action a{
+  margin-right: 1rem;
+}
+
+thead{
+  border-bottom: 2px solid #4DB33D; 
+}
+
+.info{
+  color: #4DB33D;
+  margin-left: 0.5rem;
+}

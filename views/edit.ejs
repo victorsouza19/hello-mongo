@@ -1,0 +1,26 @@
+<%- include("./partials/header") %>
+<body>
+  <%- include("./partials/navbar") %>
+  <div class="container">
+    <div class="text-top mt-5 mb-3">
+      <h3 class="m-4">A CRUD tool made by Node.js for MongoDB</h3>
+    </div>
+    <div class="card p-4">
+        <h1 class="mb-4">Edit Customer</h1>
+        <form action="/customers/edit" method="POST">
+          <label for="cpf">CPF <small class="info">only numbers</small></label>
+          <input type="number" class="form-control mb-4" name="cpf" value="<%= customer.cpf %>">
+
+          <label for="name">Name</label>
+          <input type="text" class="form-control mb-4" name="name" value="<%= customer.name %>">
+
+          <label for="telephone">Telephone</label>
+          <input type="number" class="form-control mb-5" name="telephone"  value="<%= customer.telephone %>">
+
+          <button type="submit" class="btn btn-success w-100">Edit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+<%- include("./partials/footer") %> 
