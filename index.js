@@ -94,9 +94,11 @@ app.get("/customers/edit/:cpf", (req, res) => {
 });
 
 app.post("/customers/edit", (req, res) => {
-  const { cpf, name, telephone } = req.body;
+  const { id, cpf, name, telephone } = req.body;
 
-  customer.edit(cpf, name, telephone).then(result => {
+  let data = { id, cpf, name, telephone };
+
+  customer.edit(data).then(result => {
     req.flash("msg", "Customer successfully updated!");
     res.redirect("/");
 

@@ -54,13 +54,13 @@ class Customer{
   }
 
   // edit
-  async edit(cpf, name, telephone){
+  async edit(data){
     try{
     await client.connect();
 
     let result = await collection.updateOne(
-      { cpf }, 
-      { $set: {cpf, name, telephone} }
+      { cpf: data.id }, 
+      { $set: {cpf: data.cpf, name: data.name, telephone: data.telephone} }
     );
 
     console.log("1 document has been updated!");

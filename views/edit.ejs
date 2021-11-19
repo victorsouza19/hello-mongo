@@ -11,6 +11,8 @@
           <label for="cpf">CPF <small class="info">only numbers</small></label>
           <input type="number" class="form-control mb-4" name="cpf" value="<%= customer.cpf %>">
 
+          <input type="hidden" name="id" value="<%= customer.cpf %>">
+
           <label for="name">Name</label>
           <input type="text" class="form-control mb-4" name="name" value="<%= customer.name %>">
 
